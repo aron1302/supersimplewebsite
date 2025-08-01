@@ -1,0 +1,125 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Girlfriend's Day!</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font for a friendly look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f6e6f9 0%, #e6f6f9 100%);
+        }
+        .pacifico-font {
+            font-family: 'Pacifico', cursive;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-gray-800 p-4">
+    <main class="w-full max-w-2xl bg-white p-8 md:p-12 rounded-3xl shadow-xl border-4 border-pink-200 text-center">
+        <!-- Main title -->
+        <h1 class="text-4xl md:text-6xl pacifico-font text-pink-500 mb-4 animate-pulse">
+            Happy Girlfriend's Day!
+        </h1>
+        <!-- Subtitle and message -->
+        <p class="text-lg md:text-xl font-medium mb-6">
+            To the love of my life,
+        </p>
+        <p class="text-md md:text-lg mb-8 max-w-prose mx-auto">
+            You are the light in my life, the glimmer at the end of the eternal tunnel, my ember of existence.
+            I dont deserve you, and I never will, but I will always love and cherish you. I want to be a better persn for you. I wish to give you the world, but that alone would be nowhewre near your unbounded esteem.<br>
+            I love you. <br>
+            I always will.
+        </p>
+
+
+        <!-- Image display area -->
+        <div class="relative mb-8 min-h-[400px] flex items-center justify-center bg-gray-100 rounded-2xl shadow-md">
+            <!-- Loading spinner -->
+            <div id="image-spinner" class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <svg class="animate-spin h-10 w-10 text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+            <!-- Image element with a placeholder -->
+            <img 
+                id="display-image"
+                src="images/babi.jpg" 
+                onerror="this.src='https://placehold.co/600x400/fecaca/9d174d?text=Friendship+is+Everything';"
+                alt="Illustration of friends celebrating" 
+                class="rounded-2xl w-full h-auto object-cover transform transition-transform duration-300 hover:scale-105"
+            >
+        </div>
+
+        <!-- Interactive button -->
+        <button id="reveal-button" class="px-8 py-4 text-lg font-bold text-white rounded-full 
+            bg-gradient-to-r from-pink-500 to-purple-500 
+            shadow-lg transform transition-all duration-300 
+            hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300">
+            Click for a Special Message!
+        </button>
+
+        <!-- Hidden message container -->
+        <div id="hidden-message" class="mt-8 text-xl md:text-2xl font-semibold text-purple-600 pacifico-font italic transition-all duration-500 opacity-0 transform translate-y-4">
+            You are the best! I'm so lucky to have you.
+        </div>
+    </main>
+
+    <!-- JavaScript for button and image upload functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to the button, message, image input, and image display elements
+            const revealButton = document.getElementById('reveal-button');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const imageUpload = document.getElementById('image-upload');
+            const displayImage = document.getElementById('display-image');
+            const imageSpinner = document.getElementById('image-spinner');
+
+            // Add a click event listener to the reveal button
+            revealButton.addEventListener('click', () => {
+                // Toggle the hidden message's visibility
+                if (hiddenMessage.classList.contains('opacity-0')) {
+                    hiddenMessage.classList.remove('opacity-0', 'translate-y-4');
+                    hiddenMessage.classList.add('opacity-100', 'translate-y-0');
+                    revealButton.textContent = "You already know!";
+                } else {
+                    hiddenMessage.classList.remove('opacity-100', 'translate-y-0');
+                    hiddenMessage.classList.add('opacity-0', 'translate-y-4');
+                    revealButton.textContent = "Click for a Special Message!";
+                }
+            });
+
+            // Add a change event listener to the file input
+            imageUpload.addEventListener('change', (event) => {
+                // Check if a file was selected
+                const file = event.target.files[0];
+                if (file) {
+                    // Show the loading spinner and hide the image
+                    imageSpinner.classList.remove('hidden');
+                    displayImage.classList.add('hidden');
+
+                    // Create a URL for the selected file
+                    const fileURL = URL.createObjectURL(file);
+
+                    // When the image is loaded, hide the spinner and show the image
+                    displayImage.onload = () => {
+                        imageSpinner.classList.add('hidden');
+                        displayImage.classList.remove('hidden');
+                        // Clean up the object URL to free up memory
+                        URL.revokeObjectURL(fileURL); 
+                    };
+
+                    // Set the image source to the new file URL
+                    displayImage.src = fileURL;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
